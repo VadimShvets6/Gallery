@@ -1,41 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/_8sdp"
+    android:layout_marginBottom="@dimen/_8sdp"
+    android:backgroundTint="@color/main_bg">
 
-    <!--TODO: you should not use both cardView and shapeable image view. -->
-    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/main_bg"
-        android:layout_marginBottom="@dimen/_8sdp"
-        android:layout_marginEnd="@dimen/_8sdp">
-
-        <com.google.android.material.imageview.ShapeableImageView
-            app:shapeAppearanceOverlay="@style/CornerSize10Percent"
-            android:id="@+id/ivImage"
-            android:layout_width="@dimen/_63sdp"
-            android:scaleType="centerCrop"
-            android:layout_height="@dimen/_63sdp"
-            tools:src="@mipmap/ic_launcher"/>
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivImage"
+        android:layout_width="@dimen/_63sdp"
+        android:layout_height="@dimen/_63sdp"
+        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/CornerSize10Percent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:src="@mipmap/ic_launcher" />
 
 
-        <ImageView
-            android:id="@+id/ivChecked"
-            android:layout_width="@dimen/_12sdp"
-            android:layout_height="@dimen/_12sdp"
-            android:layout_marginStart="@dimen/_3sdp"
-            android:layout_marginTop="@dimen/_3sdp"
-            android:background="@drawable/circle"/>
+    <ImageView
+        android:id="@+id/ivChecked"
+        android:layout_width="@dimen/_12sdp"
+        android:layout_height="@dimen/_12sdp"
+        android:layout_marginStart="@dimen/_3sdp"
+        android:layout_marginTop="@dimen/_3sdp"
+        android:contentDescription="@string/app_name"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/circle" />
 
-        <ImageView
-            android:id="@+id/ivCheckedTrue"
-            android:visibility="gone"
-            android:layout_width="@dimen/_12sdp"
-            android:layout_height="@dimen/_12sdp"
-            android:layout_marginStart="@dimen/_3sdp"
-            android:layout_marginTop="@dimen/_3sdp"
-            android:src="@drawable/check"
-            android:background="@drawable/circle"/>
+    <ImageView
+        android:id="@+id/ivCheckedTrue"
+        android:layout_width="@dimen/_12sdp"
+        android:layout_height="@dimen/_12sdp"
+        android:layout_marginStart="@dimen/_3sdp"
+        android:layout_marginTop="@dimen/_3sdp"
+        android:background="@drawable/circle"
+        android:src="@drawable/check"
+        android:contentDescription="@string/app_name"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
-    </androidx.cardview.widget.CardView>
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>

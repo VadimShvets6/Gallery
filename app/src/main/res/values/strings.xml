@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">Gallery</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_permission">Разрешение</string>
+    <string name="dialogue_permission_text">Для работы приложения необходимо дать разрешение на изспользование медиафайлов</string>
+    <string name="button_negative_dialog">No</string>
+    <string name="button_positive_dialog">OK</string>
+    <string name="log_message_no_permission">Не было данно разрешение</string>
+    <string name="gallery_text_view">Gallery</string>
+    <string name="cancel_button_text">Cancel</string>
+    <string name="edit_button_text">Edit</string>
     <!--TODO: EXTRACT hardcoded strings to resources -->
 </resources>

@@ -1,16 +1,16 @@
-package com.top1shvetsvadim1.gallery.presentation.fragments.MainScreenFragment
+package com.top1shvetsvadim1.gallery.presentation.fragments.main_screen_fragment
 
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.top1shvetsvadim1.gallery.databinding.FragmentMainGalleryBinding
-import com.top1shvetsvadim1.gallery.domain.Item
 import com.top1shvetsvadim1.gallery.presentation.adapter.GalleryAdapter
 import com.top1shvetsvadim1.gallery.presentation.adapter.GalleryAdapter.Companion.ITEM_HEADER
 import com.top1shvetsvadim1.gallery.presentation.adapter.GalleryAdapter.Companion.ITEM_PHOTO
@@ -26,8 +26,30 @@ class MainGalleryFragment : Fragment() {
         ViewModelProvider(this)[PhotoViewModel::class.java]
     }
 
-    //TODO: recycler adapter should be initialized by lazy, not lateinit
-    private lateinit var mProductAdapter: GalleryAdapter
+    private val mProductAdapter by lazy {
+        GalleryAdapter(::onItemClicked)
+    }
+
+    private fun onItemClicked(action: GalleryAdapter.Action) {
+        when (action) {
+            is GalleryAdapter.Action.OnPhotoClicked -> {
+                binding.floatingButtonCamera.isVisible = false
+                binding.linearButtons.isVisible = true
+                binding.buttonCancel.setOnClickListener {
+                    binding.linearButtons.isVisible = false
+                    binding.floatingButtonCamera.isVisible = true
+                }
+                binding.buttonEdit.setOnClickListener { view ->
+                    findNavController().navigate(
+                        MainGalleryFragmentDirections.actionMainGalleryFragmentToDetailFragment2(
+                            action.photo
+                        )
+                    )
+                }
+            }
+        }
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,37 +59,15 @@ class MainGalleryFragment : Fragment() {
         return binding.root
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModelMethods()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //TODO: any requests for data should be called in OnCreate
-        viewModelMethods()
         setupRecyclerView()
         viewModelObserves()
-        mProductAdapter.onProductItemClickListeners = {
-            when (it) {
-                is Item.PhotoItem -> {
-                    viewModel.changeEnableState(it)
-                    binding.floatingButtonCamera.visibility = View.GONE
-                    binding.linearButtons.visibility = View.VISIBLE
-                    binding.buttonEdit.setOnClickListener { view ->
-                        findNavController().navigate(
-                            MainGalleryFragmentDirections.actionMainGalleryFragmentToDetailFragment2(
-                                it.photo
-                            )
-                        )
-                    }
-                    binding.buttonCancel.setOnClickListener { view ->
-                        binding.linearButtons.visibility = View.GONE
-                        binding.floatingButtonCamera.visibility = View.VISIBLE
-                    }
-                    Log.d("ITEM", "Item: " + it.photo.mediaUrl + ", " + it.photo.isChecked)
-                }
-                //TODO: if you want to show explicitly that there is no action in some cases, you should pass Unit
-                //else -> Unit
-                else -> {
-                }
-            }
-        }
     }
 
     private fun viewModelObserves() {
@@ -78,15 +78,12 @@ class MainGalleryFragment : Fragment() {
     }
 
     private fun viewModelMethods() {
-        //TODO: any requests for data should be called in OnCreate
         //TODO: you should avoid to pass context in viewModel if it is not necessary
         viewModel.getListPhoto(requireContext())
     }
 
     private fun setupRecyclerView() {
         with(binding.rvList) {
-            mProductAdapter = GalleryAdapter()
-
             //TODO: you can extract this class into separate class, not the anonymous one
             val layoutManagers = GridLayoutManager(requireContext(), 4).apply {
                 spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {

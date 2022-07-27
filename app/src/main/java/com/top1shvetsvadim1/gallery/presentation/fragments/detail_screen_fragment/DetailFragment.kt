@@ -1,10 +1,10 @@
-package com.top1shvetsvadim1.gallery.presentation.fragments.DetailScreenFragment
+package com.top1shvetsvadim1.gallery.presentation.fragments.detail_screen_fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.top1shvetsvadim1.gallery.databinding.FragmentDetailBinding
@@ -28,7 +28,7 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Glide.with(requireContext()).load(args.photoItem.mediaUrl).into(binding.ivPhoto)
+        Glide.with(requireContext()).load(args.photoItem.mediaUrl).into(binding.ivImage)
     }
 
     override fun onDestroy() {

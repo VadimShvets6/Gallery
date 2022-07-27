@@ -10,14 +10,13 @@ import java.util.*
 data class Photo(
    // val tag : Int,
     val mediaUrl : Uri,
-    val data : String,
-    var isChecked : Boolean = false
-) : Parcelable //: ItemUIModel{
-//    override fun areItemsTheSame(other: ItemUIModel): Boolean {
-//        return other is Photo && other.tag == tag
-//    }
-//
-//    override fun areContentsTheSame(other: ItemUIModel): Boolean {
-//        return other is Photo && other.mediaUrl == mediaUrl
-//    }
-//}
+    val data : String
+) : Parcelable, ItemUIModel{
+    override fun areItemsTheSame(other: ItemUIModel): Boolean {
+        return other is Photo && other.data == data
+    }
+
+    override fun areContentsTheSame(other: ItemUIModel): Boolean {
+        return other is Photo && other.mediaUrl == mediaUrl
+    }
+}

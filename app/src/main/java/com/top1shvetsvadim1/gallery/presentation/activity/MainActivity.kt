@@ -1,12 +1,13 @@
 package com.top1shvetsvadim1.gallery.presentation.activity
 
-import android.app.AlertDialog
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.top1shvetsvadim1.gallery.R
 import com.top1shvetsvadim1.gallery.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -22,15 +23,14 @@ class MainActivity : AppCompatActivity() {
             this,
             android.Manifest.permission.READ_EXTERNAL_STORAGE
         ) == PackageManager.PERMISSION_GRANTED
-        //TODO: ctrl + alt + L
-        if(permissionGranted){
+        if (permissionGranted) {
             Toast.makeText(this, "success", Toast.LENGTH_SHORT).show()
         } else {
             requestPermission()
         }
     }
 
-    private fun requestPermission(){
+    private fun requestPermission() {
         ActivityCompat.requestPermissions(
             this,
             arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
@@ -43,35 +43,29 @@ class MainActivity : AppCompatActivity() {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        //TODO: ctrl + alt + L
-        if(requestCode == READ_EXTERNAL_STORAGE_RC && grantResults.isNotEmpty()){
+        if (requestCode == READ_EXTERNAL_STORAGE_RC && grantResults.isNotEmpty()) {
             val permissionGranted = grantResults[0] == PackageManager.PERMISSION_GRANTED
-            if(permissionGranted){
+            if (permissionGranted) {
                 Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
             } else {
-                //TODO: you are using slightly deprecated alert dialog. You can try MaterialDialogBuilder
-                AlertDialog.Builder(this).apply {
-                    //TODO: hardcoded strings is prohibited, while you are working at android project.
-                    //TODO: extract strings in resource file
-                    setTitle("Разрешение")
-                    setMessage("Для работы приложения необходимо дать разрешение на изспользование медиафайлов")
-                    setPositiveButton("ОК"
-                    ) { dialog, which ->
+                MaterialAlertDialogBuilder(this).apply {
+                    setTitle(getString(R.string.text_permission))
+                    setMessage(getString(R.string.dialogue_permission_text))
+                    setNegativeButton(getString(R.string.button_negative_dialog)) { dialog, which ->
+                        dialog.dismiss()
+                    }
+                    setPositiveButton(getString(R.string.button_positive_dialog)) { dialog, which ->
                         dialog.dismiss()
                         requestPermission()
                     }
-                    setNegativeButton("Нет"
-                    ) { dialog, which ->
-                        dialog.dismiss()
-                    }
                 }.show()
-                Log.d("MainActivityTest", "Не было данно разрешение")
+                Log.d("MainActivityTest", getString(R.string.log_message_no_permission))
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
-    companion object{
+    companion object {
         private const val READ_EXTERNAL_STORAGE_RC = 228
     }
 

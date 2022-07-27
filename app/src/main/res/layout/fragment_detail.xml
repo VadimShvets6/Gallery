@@ -5,16 +5,54 @@
     android:layout_height="match_parent"
     android:background="@color/main_bg"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presentation.fragments.DetailScreenFragment.DetailFragment">
+    tools:context=".presentation.fragments.detail_screen_fragment.DetailFragment">
 
-    <!--TODO find a solution to create squared Image View -->
     <ImageView
-        android:id="@+id/ivPhoto"
-        android:src="@mipmap/ic_launcher"
-        android:scaleType="centerCrop"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_300sdp"
+        android:id="@+id/buttonBack"
+        android:contentDescription="@string/app_name"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:src="@drawable/ic_chevron_left"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:layout_marginEnd="@dimen/_25sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/buttonShare"
+            android:contentDescription="@string/app_name"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:src="@drawable/ic_share" />
+        <ImageView
+            android:id="@+id/buttonChecked"
+            android:contentDescription="@string/app_name"
+            android:layout_marginStart="@dimen/_9sdp"
+            android:layout_gravity="center"
+            android:layout_width="@dimen/_19sdp"
+            android:layout_height="@dimen/_19sdp"
+            android:src="@drawable/ic_check_detail" />
+
+    </LinearLayout>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivImage"
+        android:layout_width="@dimen/_275sdp"
+        android:layout_height="@dimen/_266sdp"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="@dimen/_28sdp"
+        app:shapeAppearanceOverlay="@style/CornerSize10Percent"
+        tools:src="@mipmap/ic_launcher"
+        app:layout_constraintTop_toBottomOf="@id/buttonBack"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
