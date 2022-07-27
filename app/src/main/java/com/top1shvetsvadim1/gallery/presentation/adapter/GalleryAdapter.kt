@@ -90,6 +90,7 @@ class GalleryAdapter(val onAction: (Action) -> Unit) :
             binding.ivImage.setOnClickListener {
                 onAction(Action.OnPhotoClicked(item.photo))
                 singleItemCheck(position)
+
             }
         }
     }

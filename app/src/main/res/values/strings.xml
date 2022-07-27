@@ -9,5 +9,6 @@
     <string name="gallery_text_view">Gallery</string>
     <string name="cancel_button_text">Cancel</string>
     <string name="edit_button_text">Edit</string>
+    <string name="share_photo_title">Поделиться</string>
     <!--TODO: EXTRACT hardcoded strings to resources -->
 </resources>

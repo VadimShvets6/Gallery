@@ -1,15 +1,21 @@
 package com.top1shvetsvadim1.gallery.presentation.fragments.main_screen_fragment
 
 import android.os.Bundle
+import android.transition.Scene
+import android.transition.Transition
+import android.transition.TransitionInflater
+import android.transition.TransitionManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.top1shvetsvadim1.gallery.R
 import com.top1shvetsvadim1.gallery.databinding.FragmentMainGalleryBinding
 import com.top1shvetsvadim1.gallery.presentation.adapter.GalleryAdapter
 import com.top1shvetsvadim1.gallery.presentation.adapter.GalleryAdapter.Companion.ITEM_HEADER
@@ -63,6 +69,7 @@ class MainGalleryFragment : Fragment() {
         super.onCreate(savedInstanceState)
         viewModelMethods()
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

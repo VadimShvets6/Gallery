@@ -56,6 +56,6 @@ class PhotoRepositoryImpl : PhotoRepository {
         cursor.close()
         val group = list.groupBy { it.data }
         return group.flatMap {
-            listOf(HeaderItem(it.key, it.value.size)) + it.value.map { os -> PhotoItem(os) } }
+            listOf(HeaderItem(it.key, it.value.size)) + it.value.map { photo -> PhotoItem(photo) } }
     }
 }
