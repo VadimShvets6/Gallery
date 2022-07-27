@@ -99,7 +99,7 @@ class MainGalleryFragment : Fragment() {
                     }
                 }
             }
-            layoutManager = layoutManagers //GridLayoutManager(requireContext(), 4)
+            layoutManager = layoutManagers
             setHasFixedSize(true)
             adapter = mProductAdapter
         }

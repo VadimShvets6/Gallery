@@ -27,5 +27,15 @@
             android:layout_marginTop="@dimen/_3sdp"
             android:background="@drawable/circle"/>
 
+        <ImageView
+            android:id="@+id/ivCheckedTrue"
+            android:visibility="gone"
+            android:layout_width="@dimen/_12sdp"
+            android:layout_height="@dimen/_12sdp"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:src="@drawable/check"
+            android:background="@drawable/circle"/>
+
     </androidx.cardview.widget.CardView>
 </layout>

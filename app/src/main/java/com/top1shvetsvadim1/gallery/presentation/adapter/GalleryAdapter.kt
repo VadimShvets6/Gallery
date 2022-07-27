@@ -1,10 +1,12 @@
 package com.top1shvetsvadim1.gallery.presentation.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.top1shvetsvadim1.gallery.R
 import com.top1shvetsvadim1.gallery.databinding.DataImageBinding
@@ -15,6 +17,8 @@ class GalleryAdapter : ListAdapter<Item, PhotoItemViewHolder>(PhotoDiffCallback)
 
     //TODO: you should pass this lambda in adapter's constructor
     var onProductItemClickListeners: ((Item) -> Unit)? = null
+
+    private var singleItem = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoItemViewHolder {
         val layout = when (viewType) {
@@ -34,6 +38,7 @@ class GalleryAdapter : ListAdapter<Item, PhotoItemViewHolder>(PhotoDiffCallback)
         return PhotoItemViewHolder(binding)
     }
 
+
     override fun onBindViewHolder(holder: PhotoItemViewHolder, position: Int) {
         val photoItem = getItem(position)
         val binding = holder.binding
@@ -48,11 +53,15 @@ class GalleryAdapter : ListAdapter<Item, PhotoItemViewHolder>(PhotoDiffCallback)
                             .load(photoItem.photo.mediaUrl)
                             .into(binding.ivImage)*/
 
-                        Glide.with(binding.root).load(photoItem.photo.mediaUrl)
-                            .into(binding.ivImage)
-
+                        Glide.with(binding.root).load(photoItem.photo.mediaUrl).into(binding.ivImage)
+                        if(singleItem == position){
+                            binding.ivCheckedTrue.visibility = View.VISIBLE
+                        }else {
+                            binding.ivCheckedTrue.visibility = View.GONE
+                        }
                         binding.ivImage.setOnClickListener {
                             onProductItemClickListeners?.invoke(photoItem)
+                            singleItemCheck(position)
 
                             //TODO: extract values from boolean check
                             /*val drawableRes = if (photoItem.photo.isChecked) R.drawable.check else R.drawable.circle
@@ -78,6 +87,14 @@ class GalleryAdapter : ListAdapter<Item, PhotoItemViewHolder>(PhotoDiffCallback)
             }
         }
     }
+
+    private fun singleItemCheck(position: Int){
+        if(position == RecyclerView.NO_POSITION) return
+
+        notifyItemChanged(singleItem)
+        singleItem = position
+        notifyItemChanged(singleItem)
+    };
 
     override fun getItemViewType(position: Int): Int =
         when (getItem(position)) {
