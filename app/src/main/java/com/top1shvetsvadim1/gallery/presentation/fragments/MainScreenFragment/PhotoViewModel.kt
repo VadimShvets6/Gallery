@@ -1,5 +1,5 @@
 package com.top1shvetsvadim1.gallery.presentation.fragments.MainScreenFragment
-
+//TODO: package name
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,6 +9,7 @@ import com.top1shvetsvadim1.gallery.domain.Photo
 import com.top1shvetsvadim1.gallery.data.PhotoRepositoryImpl
 import com.top1shvetsvadim1.gallery.domain.Item
 import com.top1shvetsvadim1.gallery.domain.LoadPhotoFromGalleryUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
@@ -29,6 +30,12 @@ class PhotoViewModel : ViewModel() {
         viewModelScope.launch {
             _listPhoto.value = deferred.await()
         }
+        //TODO: do not use async/await if it is not necessary
+        //TODO: launch IO operations using Dispatchers.IO
+        //TODO: launch intensive operations using Dispatchers.Default
+        /*viewModelScope.launch(Dispatchers.Default) {
+            _listPhoto.value = loadPhotoFromGalleryUseCase(context)
+        }*/
     }
 
     fun changeEnableState(item: Item.PhotoItem) {

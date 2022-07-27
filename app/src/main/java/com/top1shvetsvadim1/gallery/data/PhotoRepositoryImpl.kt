@@ -50,7 +50,7 @@ class PhotoRepositoryImpl : PhotoRepository {
                     Photo(url, dateFormat.format(dateModified))
                 )
             } catch (e: Exception) {
-
+                //TODO: log exception and print stacktrace
             }
         }
         cursor.close()

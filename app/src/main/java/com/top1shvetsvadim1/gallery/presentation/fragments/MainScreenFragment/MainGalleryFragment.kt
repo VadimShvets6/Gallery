@@ -21,10 +21,12 @@ class MainGalleryFragment : Fragment() {
     private val binding: FragmentMainGalleryBinding
         get() = _binding ?: throw RuntimeException("FragmentMainGalleryBinding == null")
 
+    //TODO: integrate Dagger Hilt
     private val viewModel by lazy {
         ViewModelProvider(this)[PhotoViewModel::class.java]
     }
 
+    //TODO: recycler adapter should be initialized by lazy, not lateinit
     private lateinit var mProductAdapter: GalleryAdapter
 
     override fun onCreateView(
@@ -37,6 +39,7 @@ class MainGalleryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //TODO: any requests for data should be called in OnCreate
         viewModelMethods()
         setupRecyclerView()
         viewModelObserves()
@@ -59,6 +62,8 @@ class MainGalleryFragment : Fragment() {
                     }
                     Log.d("ITEM", "Item: " + it.photo.mediaUrl + ", " + it.photo.isChecked)
                 }
+                //TODO: if you want to show explicitly that there is no action in some cases, you should pass Unit
+                //else -> Unit
                 else -> {
                 }
             }
@@ -73,12 +78,16 @@ class MainGalleryFragment : Fragment() {
     }
 
     private fun viewModelMethods() {
+        //TODO: any requests for data should be called in OnCreate
+        //TODO: you should avoid to pass context in viewModel if it is not necessary
         viewModel.getListPhoto(requireContext())
     }
 
     private fun setupRecyclerView() {
         with(binding.rvList) {
             mProductAdapter = GalleryAdapter()
+
+            //TODO: you can extract this class into separate class, not the anonymous one
             val layoutManagers = GridLayoutManager(requireContext(), 4).apply {
                 spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                     override fun getSpanSize(position: Int): Int {

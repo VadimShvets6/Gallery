@@ -7,5 +7,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <!--TODO: it is a good practive to include hex in the color's name, like main_bg_252c32-->
     <color name="main_bg">#252C32</color>
 </resources>

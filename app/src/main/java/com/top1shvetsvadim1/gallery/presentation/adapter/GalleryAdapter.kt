@@ -13,16 +13,18 @@ import com.top1shvetsvadim1.gallery.domain.Item
 
 class GalleryAdapter : ListAdapter<Item, PhotoItemViewHolder>(PhotoDiffCallback) {
 
+    //TODO: you should pass this lambda in adapter's constructor
     var onProductItemClickListeners: ((Item) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoItemViewHolder {
         val layout = when (viewType) {
             ITEM_PHOTO -> R.layout.photo_item
             ITEM_HEADER -> R.layout.data_image
+            //TODO: typo
             else -> throw RuntimeException("Unknow viewType: $viewType")
         }
 
-
+        //TODO: you should create separate viewHolders for different layouts and create them here using native binding classes.
         val binding = DataBindingUtil.inflate<ViewDataBinding>(
             LayoutInflater.from(parent.context),
             layout,
@@ -35,15 +37,28 @@ class GalleryAdapter : ListAdapter<Item, PhotoItemViewHolder>(PhotoDiffCallback)
     override fun onBindViewHolder(holder: PhotoItemViewHolder, position: Int) {
         val photoItem = getItem(position)
         val binding = holder.binding
+
+        //TODO: you should encapsulate UI login into ViewHolder classes. onBindViewHolder should only call corresponding functions in holder.
         when (photoItem) {
             is Item.PhotoItem -> {
                 when (binding) {
                     is PhotoItemBinding -> {
+                        //TODO: you should arrange code in another way if you use buildes
+                        /*Glide.with(binding.root)
+                            .load(photoItem.photo.mediaUrl)
+                            .into(binding.ivImage)*/
+
                         Glide.with(binding.root).load(photoItem.photo.mediaUrl)
                             .into(binding.ivImage)
 
                         binding.ivImage.setOnClickListener {
                             onProductItemClickListeners?.invoke(photoItem)
+
+                            //TODO: extract values from boolean check
+                            /*val drawableRes = if (photoItem.photo.isChecked) R.drawable.check else R.drawable.circle
+                            binding.ivChecked.setImageResource(drawableRes)*/
+
+
                             if (photoItem.photo.isChecked) {
                                 binding.ivChecked.setImageResource(R.drawable.check)
                             } else {

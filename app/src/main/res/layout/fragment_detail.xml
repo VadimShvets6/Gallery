@@ -7,6 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.fragments.DetailScreenFragment.DetailFragment">
 
+    <!--TODO find a solution to create squared Image View -->
     <ImageView
         android:id="@+id/ivPhoto"
         android:src="@mipmap/ic_launcher"
