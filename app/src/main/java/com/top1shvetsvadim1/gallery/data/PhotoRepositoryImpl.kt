@@ -97,7 +97,7 @@ class PhotoRepositoryImpl : PhotoRepository {
                     Log.d("BITMAP", filter.image.toString())
                     Bitmap.createScaledBitmap(
                         it,
-                        it.width / 2,
+                        it.width / 2, //TODO: add config or const variable that has name, f.e it.width * FilterConfig.PreviewRate
                         it.height / 2,
                         false
                     )
@@ -123,7 +123,7 @@ class PhotoRepositoryImpl : PhotoRepository {
         clearList()
         val filterPack = FilterPack.getFilterPack(context)
         filterPack.forEach { filter ->
-            if (bitmap != null) {
+            if (bitmap != null) { //TODO: && !bitmap.isRecycled
                 val filterItem = FiltersItems(bitmap, filter)
                 addFiltersItems(filterItem)
             }
@@ -138,6 +138,7 @@ class PhotoRepositoryImpl : PhotoRepository {
     private fun isExternalStorageAvailable() =
         Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
 
+    //TODO: make it kotlin
     override fun shareImage(image: Bitmap, context: Context): Uri? {
         if (isExternalStorageAvailable()) {
             val mediaStorageDir =
@@ -170,6 +171,7 @@ class PhotoRepositoryImpl : PhotoRepository {
 
 
     //----------------------------------SAVE IMAGE TO GALLERY---------------------------------------
+    //TODO: make it kotlin
     override fun saveImageToGallery(
         context: Context,
         bitmap: Bitmap,

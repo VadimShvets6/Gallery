@@ -5,5 +5,6 @@
         <solid android:color="#2C8AF1"/>
     <stroke android:width="@dimen/_1sdp"
         android:color="#2C8AF1"/>
+    <!--TODO: extract colors in res -->
         <corners android:radius="@dimen/_4sdp"/>
 </shape>

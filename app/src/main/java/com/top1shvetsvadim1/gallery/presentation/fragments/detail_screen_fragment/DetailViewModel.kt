@@ -13,7 +13,6 @@ import com.top1shvetsvadim1.gallery.domain.FiltersItems
 import com.top1shvetsvadim1.gallery.domain.GetListBitmapUseCase
 import com.top1shvetsvadim1.gallery.domain.SaveImageToGalleryUseCase
 import com.top1shvetsvadim1.gallery.domain.ShareImageUseCase
-import com.top1shvetsvadim1.gallery.presentation.utils.Loading
 import com.top1shvetsvadim1.gallery.presentation.utils.State
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,10 +35,10 @@ class DetailViewModel : ViewModel() {
     fun getListBitmaps(uri: Uri, context: Context) {
         Log.d("BITMAP", "Uri: $uri")
         viewModelScope.launch(Dispatchers.IO) {
-            _state.postValue(Loading(true))
+            _state.postValue(State.Loading(true))
             val result = getListBitmapUseCase(uri, context)
             _listBitmaps.postValue(result)
-            _state.postValue(Loading(false))
+            _state.postValue(State.Loading(false))
         }
     }
 
@@ -47,6 +46,7 @@ class DetailViewModel : ViewModel() {
         return shareImageUseCase(image, context)
     }
 
+    //TODO: do save in background tread. You can use suspend modifier and launch it with coroutine to wait for result
     fun saveImageToGallery(
         context: Context,
         bitmap: Bitmap,

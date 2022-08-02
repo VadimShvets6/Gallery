@@ -11,6 +11,7 @@ import com.top1shvetsvadim1.gallery.databinding.ItemFilteerBinding
 import com.top1shvetsvadim1.gallery.domain.FiltersItems
 import com.zomato.photofilters.imageprocessors.Filter
 
+//TODO: use list adapter
 class FilterAdapter(
     private val data: List<FiltersItems>,
     val onAction: (ActionFilterAdapter) -> Unit
@@ -39,6 +40,7 @@ class FilterAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(filterItem: FiltersItems) {
+            //TODO: use binding.apply or with(binding) for better code formatting
             binding.constraint.startAnimation(
                 AnimationUtils.loadAnimation(
                     binding.ivFilter.context,
@@ -46,6 +48,12 @@ class FilterAdapter(
                 )
             )
             binding.tvNameFilter.text = filterItem.filter.name
+            //TODO: while you use code in builder pattern, you should add newline before every build step
+            /*Glide.with(binding.root)
+                .load(filterItem.filter.processFilter(filterItem.image))
+                .into(binding.ivFilter)*/
+
+
             Glide.with(binding.root).load(filterItem.filter.processFilter(filterItem.image))
                 .into(binding.ivFilter)
             binding.ivFilter.setOnClickListener {

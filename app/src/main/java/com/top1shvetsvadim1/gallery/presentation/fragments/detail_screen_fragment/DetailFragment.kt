@@ -19,6 +19,8 @@ import com.top1shvetsvadim1.gallery.databinding.FragmentDetailBinding
 import com.top1shvetsvadim1.gallery.presentation.adapter.detail_screen_adapter.FilterAdapter
 import com.top1shvetsvadim1.gallery.presentation.utils.BitmapUtils
 import com.top1shvetsvadim1.gallery.presentation.utils.Loading
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
@@ -33,6 +35,8 @@ class DetailFragment : Fragment() {
         get() = _binding ?: throw RuntimeException("FragmentDetailBinding == null")
 
     private lateinit var filterAdapter: FilterAdapter
+
+    //TODO: you can lazy init it
     private var mBitmap: Bitmap? = null
     private var filterBitmap: Bitmap? = null
 
@@ -68,9 +72,13 @@ class DetailFragment : Fragment() {
 
     private fun setupUserInterface() {
         Log.d("BITMAP", args.photoItem.mediaUrl.toString())
+        //TODO: builder pattern
         Glide.with(requireContext()).load(args.photoItem.mediaUrl).into(binding.ivImage)
+
         val path = args.photoItem.mediaUrl.toString()
+        //TODO: shorten these row with, f.e. split
         val filename: String = path.substring(path.lastIndexOf("/") + 1)
+        //TODO: check mime-type of file instead of force put jpg
         binding.tvName.text = String.format(
             Locale.getDefault(),
             getString(R.string.name_image_jpg),
@@ -80,6 +88,7 @@ class DetailFragment : Fragment() {
 
     private fun viewModelObserves() {
         viewModel.listBitmaps.observe(viewLifecycleOwner) {
+            //TODO: never reinitialize adapters, use list adapter instead
             filterAdapter = FilterAdapter(it, ::onItemClicked)
             binding.rvListFilters.adapter = filterAdapter
         }
@@ -97,8 +106,11 @@ class DetailFragment : Fragment() {
         binding.buttonBack.setOnClickListener {
             findNavController().popBackStack()
         }
+        //TODO: simplify comparison. There block differs only with extra blocks
         binding.buttonShare.setOnClickListener {
+            //TODO: do it in kotlin way. Try apply or create a function
             val shareIntent = Intent()
+            //TODO: never check mutable variable for null with it. Use let instead
             if (filterBitmap != null) {
                 shareIntent.apply {
                     action = Intent.ACTION_SEND
@@ -112,6 +124,7 @@ class DetailFragment : Fragment() {
                         })
                     type = "image/jpeg"
                 }
+                //TODO: add title
                 startActivity(Intent.createChooser(shareIntent, null))
             } else {
                 shareIntent.apply {
@@ -124,9 +137,25 @@ class DetailFragment : Fragment() {
         }
         binding.buttonChecked.setOnClickListener {
             binding.progressBarSave.isVisible = true
-            lifecycleScope.launch {
-                (0..100).forEach {
+            //TODO: change to callbacks
+            lifecycleScope.launch(Dispatchers.IO) {
+                val action = async(Dispatchers.IO) {
+                    filterBitmap?.let {
+                        viewModel.saveImageToGallery(
+                            requireContext(),
+                            it,
+                            args.photoItem.tag
+                        )
+                    }
+                }
+                (0..70).forEach {
                     delay(25)
+                    binding.buttonBack.isClickable = false
+                    binding.progressBarSave.progress = it
+                }
+                action.await()
+                (70..100).forEach {
+                    delay(10)
                     binding.buttonBack.isClickable = false
                     binding.progressBarSave.progress = it
                     if (it == 100) {
@@ -134,19 +163,13 @@ class DetailFragment : Fragment() {
                         binding.buttonBack.isClickable = true
                     }
                 }
-                filterBitmap?.let {
-                    viewModel.saveImageToGallery(
-                        requireContext(),
-                        it,
-                        args.photoItem.tag
-                    )
-                }
             }
         }
     }
 
     private fun onItemClicked(action: FilterAdapter.ActionFilterAdapter) {
         when (action) {
+            //TODO: pass a filter instance and manage it separately
             is FilterAdapter.ActionFilterAdapter.OnFilterClicked -> {
                 binding.buttonChecked.isVisible = true
                 Log.d("BITMAP", "filterename :" + action.filter.name)
@@ -156,7 +179,7 @@ class DetailFragment : Fragment() {
                         mBitmap?.let {
                             Bitmap.createScaledBitmap(
                                 it,
-                                mBitmap?.width ?: 1024,
+                                mBitmap?.width ?: 1024, //TODO: create constants
                                 mBitmap?.height ?: 1024,
                                 false
                             )
@@ -176,6 +199,7 @@ class DetailFragment : Fragment() {
         _binding = null
     }
 
+    //TODO: move to separate file, use lazy
     companion object {
         init {
             System.loadLibrary("NativeImageProcessor")

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -6,7 +7,7 @@
     android:background="@color/main_bg"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.fragments.detail_screen_fragment.DetailFragment">
-
+    <!-- TODO: check design on 16:9 devices -->
     <ImageView
         android:id="@+id/buttonBack"
         android:contentDescription="@string/app_name"
@@ -27,6 +28,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
+        <!-- TODO: check selector to implement checkable behaviour -->
         <ImageView
             android:id="@+id/buttonShare"
             android:contentDescription="@string/app_name"
@@ -114,6 +116,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <!-- TODO: selector -->
     <ProgressBar
         android:id="@+id/progressBarSave"
         android:layout_width="wrap_content"

@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="main_bg">#252C32</color>
     <color name="text_color_767676">#767676</color>
+    <!-- TODO: remane -->
     <color name="floatin_button_bg_2C8AF1">#2C8AF1</color>
     <color name="tv_color_main_767676">#767676</color>
 </resources>

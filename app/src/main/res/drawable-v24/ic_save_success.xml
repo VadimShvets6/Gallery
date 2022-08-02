@@ -14,3 +14,4 @@
       android:strokeColor="#F5F5F6"
       android:strokeLineCap="round"/>
 </vector>
+<!-- TODO: move to regular res folder instead of 24 api -->

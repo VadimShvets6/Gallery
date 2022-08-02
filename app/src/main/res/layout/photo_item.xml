@@ -20,6 +20,7 @@
         tools:src="@mipmap/ic_launcher" />
 
 
+    <!--TODO: selector -->
     <ImageView
         android:id="@+id/ivChecked"
         android:layout_width="@dimen/_12sdp"

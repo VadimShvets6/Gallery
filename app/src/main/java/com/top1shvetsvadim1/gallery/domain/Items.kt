@@ -7,6 +7,7 @@ import kotlinx.parcelize.Parcelize
 
 data class HeaderItem(val title: String, val size: Int) : ItemUIModel {
     override fun areItemsTheSame(other: ItemUIModel): Boolean {
+        //TODO: change to tag
         return other is HeaderItem && other.title == title
     }
 

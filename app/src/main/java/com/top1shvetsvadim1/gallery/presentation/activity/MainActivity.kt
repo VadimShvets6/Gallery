@@ -23,16 +23,19 @@ class MainActivity : AppCompatActivity() {
             checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) !=
             PackageManager.PERMISSION_GRANTED
         ) {
+            //TODO: check permission launchers
             requestPermission()
         }
         if (
             checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
             PackageManager.PERMISSION_GRANTED
         ) {
+            //TODO: check permission launchers
             requestPermission()
         }
     }
 
+    //TODO: check permission launchers
     private fun requestPermission() {
         ActivityCompat.requestPermissions(
             this,
@@ -44,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
+    //TODO: check permission launchers
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -57,6 +61,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
             } else {
                 MaterialAlertDialogBuilder(this).apply {
+                    //TODO: translate app to english
                     setTitle(getString(R.string.text_permission))
                     setMessage(getString(R.string.dialogue_permission_text))
                     setNegativeButton(getString(R.string.button_negative_dialog)) { dialog, which ->
@@ -69,6 +74,7 @@ class MainActivity : AppCompatActivity() {
                 }.show()
                 Log.d("MainActivityTest", getString(R.string.log_message_no_permission))
             }
+            //TODO: create message properly, you can try snackbar istead of toast
             if (permissionWrite) {
                 Toast.makeText(this, "WRITE", Toast.LENGTH_SHORT).show()
             } else {

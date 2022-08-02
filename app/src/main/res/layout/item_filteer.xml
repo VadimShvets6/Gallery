@@ -5,7 +5,11 @@
     android:id="@+id/constraint"
     android:layout_marginStart="@dimen/_8sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:background="#20000000"
+    >
+
+    <!-- TODO: rename properly -->
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/ivFilter"

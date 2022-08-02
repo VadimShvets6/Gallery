@@ -7,6 +7,7 @@
     android:background="@color/main_bg"
     tools:context=".presentation.fragments.main_screen_fragment.MainGalleryFragment">
 
+    <!-- TODO: you can use intuit ssp library for text sizes -->
     <TextView
         android:id="@+id/tvLabelGallery"
         android:layout_width="wrap_content"
@@ -62,6 +63,7 @@
         android:layout_marginBottom="@dimen/_39sdp"
         android:orientation="horizontal"
         android:visibility="gone"
+        tools:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">

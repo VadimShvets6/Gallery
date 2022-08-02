@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.top1shvetsvadim1.gallery.data.PhotoRepositoryImpl
 import com.top1shvetsvadim1.gallery.domain.LoadPhotoFromGalleryUseCase
 import com.top1shvetsvadim1.gallery.presentation.utils.ItemUIModel
-import com.top1shvetsvadim1.gallery.presentation.utils.Loading
 import com.top1shvetsvadim1.gallery.presentation.utils.State
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -28,10 +27,11 @@ class PhotoViewModel : ViewModel() {
 
     fun getListPhoto(context: Context) {
         viewModelScope.launch(Dispatchers.Default) {
-            _state.postValue(Loading(true))
+            //TODO: you can create simple function for not repeat code, like showLoading() and hideLoading()
+            _state.postValue(State.Loading(true))
             val result = loadPhotoFromGalleryUseCase(context)
             _listPhoto.postValue(result)
-            _state.postValue(Loading(false))
+            _state.postValue(State.Loading(false))
         }
     }
 }
