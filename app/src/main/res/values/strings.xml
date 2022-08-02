@@ -10,5 +10,14 @@
     <string name="cancel_button_text">Cancel</string>
     <string name="edit_button_text">Edit</string>
     <string name="share_photo_title">Поделиться</string>
-    <!--TODO: EXTRACT hardcoded strings to resources -->
+    <string name="contrast_text_view">Contrast</string>
+    <string name="brightness_text_view">Brightness</string>
+    <string name="monochrome_text_view">Monochrome</string>
+    <string name="sepia_text_view">Sepia</string>
+    <string name="vignette_text_view">Vignette</string>
+    <string name="tv_progress_0_seek_bar">0</string>
+    <string name="tv_plus_settings_photo">+%s</string>
+    <string name="name_image_jpg">%s.jpg</string>
+    <string name="name_iamge_tv">Имя картинки:</string>
+    <string name="tv_filter">Фильтры:</string>
 </resources>

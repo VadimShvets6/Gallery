@@ -1,15 +1,16 @@
-package com.top1shvetsvadim1.gallery.presentation.adapter
+package com.top1shvetsvadim1.gallery.presentation.adapter.main_screen_adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.top1shvetsvadim1.gallery.R
 import com.top1shvetsvadim1.gallery.databinding.DataImageBinding
 import com.top1shvetsvadim1.gallery.databinding.PhotoItemBinding
 import com.top1shvetsvadim1.gallery.domain.HeaderItem
-import com.top1shvetsvadim1.gallery.domain.Photo
 import com.top1shvetsvadim1.gallery.domain.PhotoItem
 import com.top1shvetsvadim1.gallery.presentation.utils.ItemUIModel
 
@@ -40,13 +41,34 @@ class GalleryAdapter(val onAction: (Action) -> Unit) :
 
     }
 
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val photoItem = getItem(position)) {
             is PhotoItem -> {
                 when (holder) {
                     is PhotoItemViewHolder -> {
                         holder.bind(photoItem, position)
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        when (val photoItem = getItem(position)) {
+            is PhotoItem -> {
+                when (holder) {
+                    is PhotoItemViewHolder -> {
+                        if (payloads.isEmpty()) {
+                            onBindViewHolder(holder, position)
+                        } else {
+                            if (payloads[0] == true) {
+                                holder.setChecked(photoItem.isFavorite)
+                            }
+                        }
                     }
                 }
             }
@@ -60,12 +82,21 @@ class GalleryAdapter(val onAction: (Action) -> Unit) :
         }
     }
 
+
     private fun singleItemCheck(position: Int) {
         if (position == RecyclerView.NO_POSITION) return
 
-        notifyItemChanged(singleItem)
+        if (singleItem != -1) {
+            val oldItem = getItem(singleItem) as PhotoItem
+            oldItem.isFavorite = false
+            notifyItemChanged(singleItem, true)
+        }
+
         singleItem = position
-        notifyItemChanged(singleItem)
+
+        val newItem = getItem(singleItem) as PhotoItem
+        newItem.isFavorite = true
+        notifyItemChanged(singleItem, true)
     }
 
 
@@ -76,22 +107,35 @@ class GalleryAdapter(val onAction: (Action) -> Unit) :
             else -> throw RuntimeException("Unknown view")
         }
 
+    fun resetChoice(){
+        if(singleItem == -1){
+            return
+        }
+        val newItem = getItem(singleItem) as PhotoItem
+        newItem.isFavorite = false
+        notifyItemChanged(singleItem, true)
+    }
+
     inner class PhotoItemViewHolder(private val binding: PhotoItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: PhotoItem, position: Int) {
-            Glide.with(binding.root).load(item.photo.mediaUrl).into(binding.ivImage)
-
-            if (singleItem == position) {
-                binding.ivCheckedTrue.visibility = View.VISIBLE
-            } else {
-                binding.ivCheckedTrue.visibility = View.GONE
-            }
+            Glide.with(binding.root).load(item.mediaUrl).into(binding.ivImage)
+            binding.constraint.startAnimation(
+                AnimationUtils.loadAnimation(
+                    binding.ivImage.context,
+                    R.anim.anim_recycler
+                )
+            )
             binding.ivImage.setOnClickListener {
-                onAction(Action.OnPhotoClicked(item.photo))
+                onAction(Action.OnPhotoClicked(item))
                 singleItemCheck(position)
-
             }
+            setChecked(item.isFavorite)
+        }
+
+        fun setChecked(isChecked: Boolean) {
+            binding.ivCheckedTrue.isVisible = isChecked
         }
     }
 
@@ -111,7 +155,7 @@ class GalleryAdapter(val onAction: (Action) -> Unit) :
     }
 
     sealed interface Action {
-        data class OnPhotoClicked(val photo: Photo) : Action
+        data class OnPhotoClicked(val photo: PhotoItem) : Action
     }
 
 }

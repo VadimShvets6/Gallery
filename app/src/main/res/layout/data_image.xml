@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:fontFamily="@font/sf_pro_display_semibold"
-        android:textColor="#767676"
+        android:textColor="@color/tv_color_main_767676"
         android:textSize="@dimen/_14sdp"
         tools:text="4 Jun. 2022" />
 
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/sf_pro_display_semibold"
-        android:textColor="#767676"
+        android:textColor="@color/tv_color_main_767676"
         android:textSize="18sp"
         tools:text="6" />
 

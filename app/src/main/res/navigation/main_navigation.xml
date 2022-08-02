@@ -25,6 +25,6 @@
         tools:layout="@layout/fragment_detail" >
         <argument
             android:name="photoItem"
-            app:argType="com.top1shvetsvadim1.gallery.domain.Photo" />
+            app:argType="com.top1shvetsvadim1.gallery.domain.PhotoItem" />
     </fragment>
 </navigation>

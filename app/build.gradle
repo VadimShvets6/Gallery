@@ -33,7 +33,6 @@ android {
     }
     buildFeatures{
         viewBinding true
-        //TODO: do not use dataBinding
     }
 }
 
@@ -59,6 +58,9 @@ dependencies {
 
     //SDP
     implementation 'com.intuit.sdp:sdp-android:1.1.0'
+
+    //ImageFilters
+    implementation 'info.androidhive:imagefilters:1.0.7'
 
     implementation 'com.github.bumptech.glide:glide:4.13.2'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'

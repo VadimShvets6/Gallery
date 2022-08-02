@@ -1,96 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/main_bg"
     tools:context=".presentation.fragments.main_screen_fragment.MainGalleryFragment">
 
-    <!--TODO: hardcoded text -->
     <TextView
         android:id="@+id/tvLabelGallery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_6sdp"
+        android:layout_marginTop="@dimen/_27sdp"
         android:fontFamily="@font/open_sans_bold"
         android:text="@string/gallery_text_view"
+        android:textColor="@color/white"
         android:textSize="24sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="@dimen/_27sdp"
-        android:layout_marginStart="@dimen/_6sdp"
         android:textStyle="bold"
-        android:textColor="@color/white" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/_25sdp"
         android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_25sdp"
         android:layout_marginEnd="@dimen/_12sdp"
-        tools:listitem="@layout/photo_item"
-        tools:itemCount="2"
-        android:scrollbars="vertical"
-        android:scrollbarStyle="insideInset"
         android:scrollbarSize="@dimen/_6sdp"
-        app:layout_constraintTop_toBottomOf="@id/tvLabelGallery"
-        app:layout_constraintStart_toStartOf="parent"
+        android:scrollbarStyle="insideInset"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLabelGallery"
+        tools:itemCount="2"
+        tools:listitem="@layout/photo_item" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingButtonCamera"
         android:layout_width="wrap_content"
-        android:contentDescription="@string/app_name"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_39sdp"
         android:layout_marginEnd="@dimen/_12sdp"
-        android:backgroundTint="#2C8AF1"
-        android:background="#2C8AF1"
+        android:layout_marginBottom="@dimen/_39sdp"
+        android:background="@color/floatin_button_bg_2C8AF1"
+        android:backgroundTint="@color/floatin_button_bg_2C8AF1"
+        android:contentDescription="@string/app_name"
         android:src="@drawable/ic_vector"
-        app:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-    
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/white" />
+
     <LinearLayout
         android:id="@+id/linearButtons"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginStart="@dimen/_12sdp"
         android:layout_marginEnd="@dimen/_12sdp"
         android:layout_marginBottom="@dimen/_39sdp"
+        android:orientation="horizontal"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/buttonCancel"
             android:layout_width="@dimen/_174sdp"
             android:layout_height="@dimen/_56sdp"
-            android:textColor="#767676"
             android:layout_weight="1"
+            android:background="@drawable/button_bg"
             android:fontFamily="@font/sf_pro_display_semibold"
             android:gravity="center"
-            android:textSize="@dimen/_14sdp"
-            android:background="@drawable/button_bg"
-            android:text="@string/cancel_button_text"/>
+            android:text="@string/cancel_button_text"
+            android:textColor="@color/tv_color_main_767676"
+            android:textSize="@dimen/_14sdp" />
 
         <TextView
             android:id="@+id/buttonEdit"
             android:layout_width="@dimen/_174sdp"
             android:layout_height="@dimen/_56sdp"
-            android:textColor="@color/white"
-            android:layout_weight="1"
             android:layout_marginStart="@dimen/_9sdp"
-            android:gravity="center"
-            android:fontFamily="@font/sf_pro_display_semibold"
-            android:textSize="@dimen/_14sdp"
+            android:layout_weight="1"
             android:background="@drawable/button_edit_bg"
-            android:text="@string/edit_button_text"/>
-        
+            android:fontFamily="@font/sf_pro_display_semibold"
+            android:gravity="center"
+            android:text="@string/edit_button_text"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14sdp" />
+
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

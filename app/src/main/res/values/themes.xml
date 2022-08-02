@@ -12,6 +12,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:windowActivityTransitions">true</item>
     </style>
 
     <style name="CornerSize10Percent" parent="">
@@ -22,5 +23,9 @@
     <style name="CornerSize2Percent" parent="">
         <item name="cornerSize">2%</item>
         <item name="android:background">@color/main_bg</item>
+    </style>
+    <style name="CircularDeterminateProgressBar">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/circle</item>
     </style>
 </resources>

@@ -1,10 +1,7 @@
 package com.top1shvetsvadim1.gallery.presentation.fragments.main_screen_fragment
 
 import android.os.Bundle
-import android.transition.Scene
-import android.transition.Transition
-import android.transition.TransitionInflater
-import android.transition.TransitionManager
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,17 +12,23 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.top1shvetsvadim1.gallery.R
 import com.top1shvetsvadim1.gallery.databinding.FragmentMainGalleryBinding
-import com.top1shvetsvadim1.gallery.presentation.adapter.GalleryAdapter
-import com.top1shvetsvadim1.gallery.presentation.adapter.GalleryAdapter.Companion.ITEM_HEADER
-import com.top1shvetsvadim1.gallery.presentation.adapter.GalleryAdapter.Companion.ITEM_PHOTO
+import com.top1shvetsvadim1.gallery.presentation.adapter.main_screen_adapter.GalleryAdapter
+import com.top1shvetsvadim1.gallery.presentation.adapter.main_screen_adapter.GalleryAdapter.Companion.ITEM_HEADER
+import com.top1shvetsvadim1.gallery.presentation.adapter.main_screen_adapter.GalleryAdapter.Companion.ITEM_PHOTO
+import com.top1shvetsvadim1.gallery.presentation.utils.Loading
+import com.top1shvetsvadim1.gallery.presentation.utils.MediaContentObserver
+import com.top1shvetsvadim1.gallery.presentation.utils.SpanGridLayoutManager
+
 
 class MainGalleryFragment : Fragment() {
 
     private var _binding: FragmentMainGalleryBinding? = null
     private val binding: FragmentMainGalleryBinding
         get() = _binding ?: throw RuntimeException("FragmentMainGalleryBinding == null")
+
+    private val observerFile by MediaContentObserver.lazyInit(this::onMediaChanged)
+    private val spanManager by SpanGridLayoutManager.lazyInit(this::onSpanManger)
 
     //TODO: integrate Dagger Hilt
     private val viewModel by lazy {
@@ -44,8 +47,9 @@ class MainGalleryFragment : Fragment() {
                 binding.buttonCancel.setOnClickListener {
                     binding.linearButtons.isVisible = false
                     binding.floatingButtonCamera.isVisible = true
+                    mProductAdapter.resetChoice()
                 }
-                binding.buttonEdit.setOnClickListener { view ->
+                binding.buttonEdit.setOnClickListener {
                     findNavController().navigate(
                         MainGalleryFragmentDirections.actionMainGalleryFragmentToDetailFragment2(
                             action.photo
@@ -70,17 +74,39 @@ class MainGalleryFragment : Fragment() {
         viewModelMethods()
     }
 
+    override fun onStart() {
+        super.onStart()
+        requireContext().contentResolver.registerContentObserver(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            true,
+            observerFile
+        )
+    }
+
+    private fun onMediaChanged() {
+        viewModelMethods()
+        setupRecyclerView()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         viewModelObserves()
+        mProductAdapter.resetChoice()
+        ViewCompat.setTransitionName(binding.rvList, "item_image")
     }
 
     private fun viewModelObserves() {
         viewModel.listPhoto.observe(viewLifecycleOwner) {
-            Log.d("LISTTEST", it.toString())
             mProductAdapter.submitList(it)
+        }
+        viewModel.state.observe(viewLifecycleOwner) {
+            when (it) {
+                is Loading -> {
+                    binding.progressBar.isVisible = it.isLoading
+                }
+                else -> throw RuntimeException("error")
+            }
         }
     }
 
@@ -89,19 +115,18 @@ class MainGalleryFragment : Fragment() {
         viewModel.getListPhoto(requireContext())
     }
 
+    private fun onSpanManger(position: Int): Int {
+        return when (binding.rvList.adapter?.getItemViewType(position)) {
+            ITEM_HEADER -> 4
+            ITEM_PHOTO -> 1
+            else -> 1
+        }
+    }
+
     private fun setupRecyclerView() {
         with(binding.rvList) {
-            //TODO: you can extract this class into separate class, not the anonymous one
             val layoutManagers = GridLayoutManager(requireContext(), 4).apply {
-                spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                    override fun getSpanSize(position: Int): Int {
-                        return when (adapter?.getItemViewType(position)) {
-                            ITEM_HEADER -> 4
-                            ITEM_PHOTO -> 1
-                            else -> 1
-                        }
-                    }
-                }
+                spanSizeLookup = spanManager
             }
             layoutManager = layoutManagers
             setHasFixedSize(true)
@@ -114,5 +139,8 @@ class MainGalleryFragment : Fragment() {
         _binding = null
     }
 
-
+    override fun onDetach() {
+        super.onDetach()
+        requireContext().contentResolver.unregisterContentObserver(observerFile)
+    }
 }

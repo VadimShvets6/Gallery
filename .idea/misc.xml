@@ -3,16 +3,22 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/KotlinAndroid/Gallery/app/src/main/res/drawable-v24/ic_save_success.xml" value="0.14635416666666667" />
         <entry key="..\:/KotlinAndroid/Gallery/app/src/main/res/drawable/button_bg.xml" value="0.2703125" />
         <entry key="..\:/KotlinAndroid/Gallery/app/src/main/res/drawable/button_edit_bg.xml" value="0.2703125" />
         <entry key="..\:/KotlinAndroid/Gallery/app/src/main/res/drawable/circle.xml" value="0.14635416666666667" />
+        <entry key="..\:/KotlinAndroid/Gallery/app/src/main/res/drawable/circle_progress_bar.xml" value="0.2703125" />
+        <entry key="..\:/KotlinAndroid/Gallery/app/src/main/res/drawable/ic_check_detail.xml" value="0.14635416666666667" />
         <entry key="..\:/KotlinAndroid/Gallery/app/src/main/res/drawable/ic_vector.xml" value="0.2703125" />
+        <entry key="..\:/KotlinAndroid/Gallery/app/src/main/res/drawable/progress_bar_style.xml" value="0.2703125" />
         <entry key="..\:/KotlinAndroid/Gallery/app/src/main/res/layout/activity_main.xml" value="0.6" />
         <entry key="..\:/KotlinAndroid/Gallery/app/src/main/res/layout/data_image.xml" value="0.25416666666666665" />
-        <entry key="..\:/KotlinAndroid/Gallery/app/src/main/res/layout/fragment_detail.xml" value="0.2" />
+        <entry key="..\:/KotlinAndroid/Gallery/app/src/main/res/layout/fragment_detail.xml" value="0.7668711656441718" />
         <entry key="..\:/KotlinAndroid/Gallery/app/src/main/res/layout/fragment_main_gallery.xml" value="0.176" />
         <entry key="..\:/KotlinAndroid/Gallery/app/src/main/res/layout/fragment_splash.xml" value="0.13020833333333334" />
+        <entry key="..\:/KotlinAndroid/Gallery/app/src/main/res/layout/item_filteer.xml" value="0.25416666666666665" />
         <entry key="..\:/KotlinAndroid/Gallery/app/src/main/res/layout/photo_item.xml" value="0.4844961240310077" />
+        <entry key="..\:/KotlinAndroid/Gallery/app/src/main/res/xml/provide_path.xml" value="0.1" />
       </map>
     </option>
   </component>

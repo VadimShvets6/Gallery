@@ -35,6 +35,7 @@
             android:src="@drawable/ic_share" />
         <ImageView
             android:id="@+id/buttonChecked"
+            android:visibility="gone"
             android:contentDescription="@string/app_name"
             android:layout_marginStart="@dimen/_9sdp"
             android:layout_gravity="center"
@@ -47,7 +48,7 @@
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/ivImage"
         android:layout_width="@dimen/_276sdp"
-        android:layout_height="@dimen/_266sdp"
+        android:layout_height="@dimen/_350sdp"
         android:scaleType="centerCrop"
         android:layout_marginTop="@dimen/_28sdp"
         app:shapeAppearanceOverlay="@style/CornerSize2Percent"
@@ -55,5 +56,99 @@
         app:layout_constraintTop_toBottomOf="@id/buttonBack"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvLabelName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/name_iamge_tv"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/_18sdp"
+        android:layout_marginStart="@dimen/_21sdp"
+        android:fontFamily="@font/sf_pro_display_semibold"
+        android:textSize="@dimen/_14sdp"
+        app:layout_constraintTop_toBottomOf="@id/ivImage"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="0dp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_18sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:fontFamily="@font/sf_pro_display_semibold"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvLabelName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvLabelName"
+        app:layout_constraintTop_toBottomOf="@id/ivImage"
+        tools:text="12322342342_32423423.jpg" />
+
+    <TextView
+        android:id="@+id/tvLabelFilters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_filter"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_21sdp"
+        android:fontFamily="@font/sf_pro_display_semibold"
+        android:textSize="@dimen/_14sdp"
+        app:layout_constraintTop_toBottomOf="@id/tvLabelName"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvListFilters"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_18sdp"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:orientation="horizontal"
+        tools:listitem="@layout/item_filteer"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@id/tvLabelFilters"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ProgressBar
+        android:id="@+id/progressBarSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:visibility="gone"
+        style="@style/CircularDeterminateProgressBar"
+        android:progressDrawable="@drawable/circle_progress_bar"
+        android:progress="0"
+        android:layout_marginEnd="@dimen/_12sdp"
+        app:layout_constraintTop_toBottomOf="@id/ivImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/rvListFilters"/>
+
+    <ImageView
+        android:id="@+id/ivSaveSuccess"
+        android:layout_width="@dimen/_32sdp"
+        android:layout_height="@dimen/_32sdp"
+        android:src="@drawable/ic_save_success"
+        android:visibility="gone"
+        android:contentDescription="@string/app_name"
+        app:layout_constraintTop_toTopOf="@id/progressBarSave"
+        app:layout_constraintBottom_toBottomOf="@id/progressBarSave"
+        app:layout_constraintStart_toStartOf="@id/progressBarSave"
+        app:layout_constraintEnd_toEndOf="@id/progressBarSave"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginEnd="@dimen/_12sdp"
+        app:layout_constraintTop_toBottomOf="@id/tvLabelFilters"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

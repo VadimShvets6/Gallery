@@ -19,13 +19,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        val permissionGranted = ActivityCompat.checkSelfPermission(
-            this,
-            android.Manifest.permission.READ_EXTERNAL_STORAGE
-        ) == PackageManager.PERMISSION_GRANTED
-        if (permissionGranted) {
-            Toast.makeText(this, "success", Toast.LENGTH_SHORT).show()
-        } else {
+        if (
+            checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) !=
+            PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermission()
+        }
+        if (
+            checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+            PackageManager.PERMISSION_GRANTED
+        ) {
             requestPermission()
         }
     }
@@ -33,8 +36,11 @@ class MainActivity : AppCompatActivity() {
     private fun requestPermission() {
         ActivityCompat.requestPermissions(
             this,
-            arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
-            READ_EXTERNAL_STORAGE_RC
+            arrayOf(
+                android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ),
+            READ_AND_WRITE_EXTERNAL_STORAGE_RC,
         )
     }
 
@@ -43,9 +49,11 @@ class MainActivity : AppCompatActivity() {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        if (requestCode == READ_EXTERNAL_STORAGE_RC && grantResults.isNotEmpty()) {
-            val permissionGranted = grantResults[0] == PackageManager.PERMISSION_GRANTED
-            if (permissionGranted) {
+        if (requestCode == READ_AND_WRITE_EXTERNAL_STORAGE_RC && grantResults.isNotEmpty()) {
+            val permissionRead = grantResults[0] == PackageManager.PERMISSION_GRANTED
+            val permissionWrite = grantResults[0] == PackageManager.PERMISSION_GRANTED
+            Log.d("TEST", grantResults.size.toString())
+            if (permissionRead) {
                 Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
             } else {
                 MaterialAlertDialogBuilder(this).apply {
@@ -61,12 +69,17 @@ class MainActivity : AppCompatActivity() {
                 }.show()
                 Log.d("MainActivityTest", getString(R.string.log_message_no_permission))
             }
+            if (permissionWrite) {
+                Toast.makeText(this, "WRITE", Toast.LENGTH_SHORT).show()
+            } else {
+                requestPermission()
+            }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     companion object {
-        private const val READ_EXTERNAL_STORAGE_RC = 228
+        private const val READ_AND_WRITE_EXTERNAL_STORAGE_RC = 228
     }
 
 }

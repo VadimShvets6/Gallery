@@ -8,8 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.top1shvetsvadim1.gallery.data.PhotoRepositoryImpl
 import com.top1shvetsvadim1.gallery.domain.LoadPhotoFromGalleryUseCase
 import com.top1shvetsvadim1.gallery.presentation.utils.ItemUIModel
+import com.top1shvetsvadim1.gallery.presentation.utils.Loading
+import com.top1shvetsvadim1.gallery.presentation.utils.State
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class PhotoViewModel : ViewModel() {
@@ -21,13 +22,16 @@ class PhotoViewModel : ViewModel() {
     val listPhoto: LiveData<List<ItemUIModel>>
         get() = _listPhoto
 
+    private val _state = MutableLiveData<State>()
+    val state: LiveData<State>
+        get() = _state
+
     fun getListPhoto(context: Context) {
-        //TODO: do not use async/await if it is not necessary
-        //TODO: launch IO operations using Dispatchers.IO
-        //TODO: launch intensive operations using Dispatchers.Default
         viewModelScope.launch(Dispatchers.Default) {
+            _state.postValue(Loading(true))
             val result = loadPhotoFromGalleryUseCase(context)
             _listPhoto.postValue(result)
+            _state.postValue(Loading(false))
         }
     }
 }
