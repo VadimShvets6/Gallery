@@ -10,7 +10,7 @@ object PhotoDiffCallback : DiffUtil.ItemCallback<ItemUIModel>() {
     }
 
     override fun areContentsTheSame(oldItem: ItemUIModel, newItem: ItemUIModel): Boolean {
-        return  oldItem.areContentsTheSame(newItem)
+        return oldItem.areContentsTheSame(newItem)
     }
 
     override fun getChangePayload(oldItem: ItemUIModel, newItem: ItemUIModel): Any {

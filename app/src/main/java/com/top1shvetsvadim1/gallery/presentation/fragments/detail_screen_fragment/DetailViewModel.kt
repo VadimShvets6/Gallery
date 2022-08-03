@@ -3,7 +3,6 @@ package com.top1shvetsvadim1.gallery.presentation.fragments.detail_screen_fragme
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,6 +15,7 @@ import com.top1shvetsvadim1.gallery.domain.ShareImageUseCase
 import com.top1shvetsvadim1.gallery.presentation.utils.State
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DetailViewModel : ViewModel() {
 
@@ -33,12 +33,11 @@ class DetailViewModel : ViewModel() {
         get() = _state
 
     fun getListBitmaps(uri: Uri, context: Context) {
-        Log.d("BITMAP", "Uri: $uri")
         viewModelScope.launch(Dispatchers.IO) {
-            _state.postValue(State.Loading(true))
+            showLoading()
             val result = getListBitmapUseCase(uri, context)
             _listBitmaps.postValue(result)
-            _state.postValue(State.Loading(false))
+            hideLoading()
         }
     }
 
@@ -46,12 +45,21 @@ class DetailViewModel : ViewModel() {
         return shareImageUseCase(image, context)
     }
 
-    //TODO: do save in background tread. You can use suspend modifier and launch it with coroutine to wait for result
     fun saveImageToGallery(
         context: Context,
         bitmap: Bitmap,
         displayName: String
-    ): Uri {
-        return saveImageToGalleryUseCase(context, bitmap, displayName)
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            saveImageToGalleryUseCase(context, bitmap, displayName)
+        }
+    }
+
+    private fun showLoading() {
+        _state.postValue(State.Loading(true))
+    }
+
+    private fun hideLoading() {
+        _state.postValue(State.Loading(false))
     }
 }

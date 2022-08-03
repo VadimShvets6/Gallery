@@ -8,9 +8,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:background="#20000000"
     >
-
-    <!-- TODO: rename properly -->
-
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/ivFilter"
         android:layout_width="@dimen/_63sdp"

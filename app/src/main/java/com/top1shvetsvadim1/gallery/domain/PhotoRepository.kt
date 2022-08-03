@@ -9,10 +9,10 @@ interface PhotoRepository {
 
     suspend fun loadListPhoto(context: Context): List<ItemUIModel>
 
-    suspend fun getBitmapList(uri: Uri, context: Context) : List<FiltersItems>
+    suspend fun getBitmapList(uri: Uri, context: Context): List<FiltersItems>
 
-    fun shareImage(image: Bitmap, context: Context) : Uri?
+    fun shareImage(image: Bitmap, context: Context): Uri?
 
-    fun saveImageToGallery(context: Context, bitmap: Bitmap, displayName: String) : Uri
+    suspend fun saveImageToGallery(context: Context, bitmap: Bitmap, displayName: String): Uri
 
 }

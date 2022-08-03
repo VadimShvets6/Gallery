@@ -6,7 +6,7 @@ import android.graphics.Bitmap
 class SaveImageToGalleryUseCase(
     private val repository: PhotoRepository
 ) {
-    operator fun invoke(
+    suspend operator fun invoke(
         context: Context,
         bitmap: Bitmap,
         displayName: String

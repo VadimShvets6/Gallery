@@ -20,6 +20,7 @@ import com.zomato.photofilters.FilterPack
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -61,7 +62,7 @@ class PhotoRepositoryImpl : PhotoRepository {
                 )
                 val dateModified =
                     Date(TimeUnit.SECONDS.toMillis(cursor.getLong(dataId)))
-                val dateFormat = SimpleDateFormat("d MMM yyyy", Locale.getDefault());
+                val dateFormat = SimpleDateFormat("d MMM yyyy", Locale.getDefault())
                 list.add(
                     PhotoItem(url.toString(), url, dateFormat.format(dateModified))
                 )
@@ -72,7 +73,7 @@ class PhotoRepositoryImpl : PhotoRepository {
         cursor.close()
         val group = list.groupBy { it.data }
         return group.flatMap {
-            listOf(HeaderItem(it.key, it.value.size)) + it.value.map { photo ->
+            listOf(HeaderItem(it.key, it.key, it.value.size)) + it.value.map { photo ->
                 PhotoItem(
                     photo.tag,
                     photo.mediaUrl,
@@ -97,8 +98,8 @@ class PhotoRepositoryImpl : PhotoRepository {
                     Log.d("BITMAP", filter.image.toString())
                     Bitmap.createScaledBitmap(
                         it,
-                        it.width / 2, //TODO: add config or const variable that has name, f.e it.width * FilterConfig.PreviewRate
-                        it.height / 2,
+                        it.width / PREVIEW_RATE,
+                        it.height / PREVIEW_RATE,
                         false
                     )
                 }
@@ -123,7 +124,7 @@ class PhotoRepositoryImpl : PhotoRepository {
         clearList()
         val filterPack = FilterPack.getFilterPack(context)
         filterPack.forEach { filter ->
-            if (bitmap != null) { //TODO: && !bitmap.isRecycled
+            if (bitmap != null && !bitmap.isRecycled) {
                 val filterItem = FiltersItems(bitmap, filter)
                 addFiltersItems(filterItem)
             }
@@ -138,72 +139,84 @@ class PhotoRepositoryImpl : PhotoRepository {
     private fun isExternalStorageAvailable() =
         Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
 
+
     //TODO: make it kotlin
     override fun shareImage(image: Bitmap, context: Context): Uri? {
         if (isExternalStorageAvailable()) {
-            val mediaStorageDir =
-                context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-            val timeStamp =
-                SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-            val fileName = "IMG_$timeStamp"
-            val fileType = ".jpg"
-
-            val mediaFile: File
-            try {
-                mediaFile = File.createTempFile(fileName, fileType, mediaStorageDir)
+            return try {
+                val fileName =
+                    "IMG_${SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())}"
+                val mediaFile = tempFile(fileName, context)
                 val fos = FileOutputStream(mediaFile)
-                image.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                fos.flush()
-                fos.close()
-
-                return FileProvider.getUriForFile(
-                    context,
-                    context.packageName + ".provider",
-                    mediaFile
-                )
+                image.compress(Bitmap.CompressFormat.JPEG, QUALITY_SHARE, fos)
+                fos.apply {
+                    flush()
+                    close()
+                }
+               getUriFile(mediaFile, context)
             } catch (e: IOException) {
                 e.printStackTrace()
+                null
             }
         }
         return null
+    }
+
+    private fun getUriFile(mediaFile : File, context: Context) : Uri{
+       return FileProvider.getUriForFile(
+            context,
+            context.packageName + PROVIDER_ENDPOINT,
+            mediaFile
+        )
+    }
+
+    private fun tempFile(fileName: String, context: Context) : File {
+        return File.createTempFile(
+            fileName,
+            FILE_TYPE,
+            context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        )
     }
     //-----------------------------------SHARE IMAGE------------------------------------------------
 
 
     //----------------------------------SAVE IMAGE TO GALLERY---------------------------------------
     //TODO: make it kotlin
-    override fun saveImageToGallery(
+    override suspend fun saveImageToGallery(
         context: Context,
         bitmap: Bitmap,
         displayName: String
     ): Uri {
         val values = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, displayName)
-            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+            put(MediaStore.MediaColumns.MIME_TYPE, MIME_TYPE)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DCIM)
             }
         }
-
-        val resolver = context.contentResolver
         var uri: Uri? = null
-
-        try {
-            uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-                ?: throw IOException("Failed to create new MediaStore record.")
-
-            resolver.openOutputStream(uri)?.use {
-                if (!bitmap.compress(Bitmap.CompressFormat.JPEG, 95, it))
+        return try {
+            uri = context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+                    ?: throw IOException("Failed to create new MediaStore record.")
+            context.contentResolver.openOutputStream(uri)?.use {
+                if (!bitmap.compress(Bitmap.CompressFormat.JPEG, QUALITY_SAVE, it))
                     throw IOException("Failed to save bitmap.")
             } ?: throw IOException("Failed to open output stream.")
-
-            return uri
-
+            uri
         } catch (e: IOException) {
             uri?.let { orphanUri ->
-                resolver.delete(orphanUri, null, null)
+                context.contentResolver.delete(orphanUri, null, null)
             }
             throw e
         }
+    }
+
+    companion object {
+        private const val PREVIEW_RATE = 6
+        private const val FILE_TYPE = ".jpg"
+        private const val PROVIDER_ENDPOINT = ".provider"
+        private const val QUALITY_SHARE = 100
+        private const val QUALITY_SAVE = 95
+        private const val MIME_TYPE = "image/jpeg"
     }
 }

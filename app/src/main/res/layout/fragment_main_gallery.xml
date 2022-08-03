@@ -7,7 +7,6 @@
     android:background="@color/main_bg"
     tools:context=".presentation.fragments.main_screen_fragment.MainGalleryFragment">
 
-    <!-- TODO: you can use intuit ssp library for text sizes -->
     <TextView
         android:id="@+id/tvLabelGallery"
         android:layout_width="wrap_content"
@@ -17,7 +16,7 @@
         android:fontFamily="@font/open_sans_bold"
         android:text="@string/gallery_text_view"
         android:textColor="@color/white"
-        android:textSize="24sp"
+        android:textSize="@dimen/_24ssp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -46,8 +45,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_12sdp"
         android:layout_marginBottom="@dimen/_39sdp"
-        android:background="@color/floatin_button_bg_2C8AF1"
-        android:backgroundTint="@color/floatin_button_bg_2C8AF1"
+        android:background="@color/floating_button_bg_2C8AF1"
+        android:backgroundTint="@color/floating_button_bg_2C8AF1"
         android:contentDescription="@string/app_name"
         android:src="@drawable/ic_vector"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -78,7 +77,7 @@
             android:gravity="center"
             android:text="@string/cancel_button_text"
             android:textColor="@color/tv_color_main_767676"
-            android:textSize="@dimen/_14sdp" />
+            android:textSize="@dimen/_14ssp" />
 
         <TextView
             android:id="@+id/buttonEdit"
@@ -91,7 +90,7 @@
             android:gravity="center"
             android:text="@string/edit_button_text"
             android:textColor="@color/white"
-            android:textSize="@dimen/_14sdp" />
+            android:textSize="@dimen/_14ssp" />
 
     </LinearLayout>
 

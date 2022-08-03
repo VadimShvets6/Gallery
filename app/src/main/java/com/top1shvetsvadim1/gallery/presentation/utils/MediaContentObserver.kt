@@ -4,7 +4,8 @@ import android.database.ContentObserver
 import android.os.Handler
 import android.os.Looper
 
-class MediaContentObserver(val onChange: () -> Unit) : ContentObserver(Handler(Looper.myLooper()!!)) {
+class MediaContentObserver(val onChange: () -> Unit) :
+    ContentObserver(Handler(Looper.myLooper()!!)) {
     override fun onChange(selfChange: Boolean) {
         super.onChange(selfChange)
         onChange()

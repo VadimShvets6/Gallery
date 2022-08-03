@@ -1,24 +1,25 @@
 <resources>
-    <!--TODO: translate application to english -->
     <string name="app_name">Gallery</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="text_permission">Разрешение</string>
-    <string name="dialogue_permission_text">Для работы приложения необходимо дать разрешение на изспользование медиафайлов</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="text_permission">Permission</string>
+    <string name="dialogue_permission_text">For the application to work, you must give permission to use media files</string>
     <string name="button_negative_dialog">No</string>
     <string name="button_positive_dialog">OK</string>
-    <string name="log_message_no_permission">Не было данно разрешение</string>
+    <string name="log_message_no_permission">Permission has not been given</string>
     <string name="gallery_text_view">Gallery</string>
     <string name="cancel_button_text">Cancel</string>
     <string name="edit_button_text">Edit</string>
-    <string name="share_photo_title">Поделиться</string>
+    <string name="share_photo_title">Share</string>
     <string name="contrast_text_view">Contrast</string>
     <string name="brightness_text_view">Brightness</string>
     <string name="monochrome_text_view">Monochrome</string>
     <string name="sepia_text_view">Sepia</string>
     <string name="vignette_text_view">Vignette</string>
-    <string name="tv_progress_0_seek_bar">0</string>
-    <string name="tv_plus_settings_photo">+%s</string>
-    <string name="name_image_jpg">%s.jpg</string>
-    <string name="name_iamge_tv">Имя картинки:</string>
-    <string name="tv_filter">Фильтры:</string>
+    <string name="tv_progress_0_seek_bar" translatable="false">0</string>
+    <string name="tv_plus_settings_photo" translatable="false">+%s</string>
+    <string name="name_image_jpg" translatable="false">%s.jpg</string>
+    <string name="name_iamge_tv">Pircture name:</string>
+    <string name="tv_filter">Filters:</string>
+    <string name="permission_read_success">Read permission granted</string>
+    <string name="permission_write_success">Write permission granted</string>
 </resources>

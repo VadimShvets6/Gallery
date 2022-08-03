@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Галерея</string>
+    <string name="text_permission">Разрешение</string>
+    <string name="dialogue_permission_text">Для работы приложения необходимо дать разрешение на изспользование медиафайлов</string>
+    <string name="button_negative_dialog">Отмена</string>
+    <string name="button_positive_dialog">Разрешить</string>
+    <string name="log_message_no_permission">Не было данно разрешение</string>
+    <string name="gallery_text_view">Галерея</string>
+    <string name="cancel_button_text">Отмена</string>
+    <string name="edit_button_text">Редактировать</string>
+    <string name="share_photo_title">Поделиться</string>
+    <string name="contrast_text_view">Контраст</string>
+    <string name="brightness_text_view">Яркость</string>
+    <string name="monochrome_text_view">Монохром</string>
+    <string name="sepia_text_view">Сепия</string>
+    <string name="vignette_text_view">Виньетка</string>
+    <string name="name_iamge_tv">Имя картиник:</string>
+    <string name="tv_filter">Фильтры:</string>
+    <string name="permission_read_success">Разрешение на чтение получено</string>
+    <string name="permission_write_success">Разрешение на использование галереи получено</string>
+</resources>

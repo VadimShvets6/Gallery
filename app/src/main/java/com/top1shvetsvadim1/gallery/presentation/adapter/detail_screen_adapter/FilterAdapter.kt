@@ -4,22 +4,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.top1shvetsvadim1.gallery.R
-import com.top1shvetsvadim1.gallery.databinding.ItemFilteerBinding
+import com.top1shvetsvadim1.gallery.databinding.FilterItemBinding
 import com.top1shvetsvadim1.gallery.domain.FiltersItems
 import com.zomato.photofilters.imageprocessors.Filter
 
-//TODO: use list adapter
 class FilterAdapter(
-    private val data: List<FiltersItems>,
     val onAction: (ActionFilterAdapter) -> Unit
-) :
-    RecyclerView.Adapter<FilterAdapter.FilterAdapterViewHolder>() {
+) : ListAdapter<FiltersItems, FilterAdapter.FilterAdapterViewHolder>(FilterDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilterAdapterViewHolder {
-        val binding = ItemFilteerBinding.inflate(
+        val binding = FilterItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -28,40 +26,32 @@ class FilterAdapter(
     }
 
     override fun onBindViewHolder(holder: FilterAdapterViewHolder, position: Int) {
-        val filterItem = data[position]
+        val filterItem = getItem(position)
         holder.bind(filterItem)
     }
 
-    override fun getItemCount(): Int {
-        return data.size
-    }
-
-    inner class FilterAdapterViewHolder(private val binding: ItemFilteerBinding) :
+    inner class FilterAdapterViewHolder(private val binding: FilterItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(filterItem: FiltersItems) {
-            //TODO: use binding.apply or with(binding) for better code formatting
-            binding.constraint.startAnimation(
-                AnimationUtils.loadAnimation(
-                    binding.ivFilter.context,
-                    R.anim.horizontal_recycler
+            with(binding) {
+                constraint.startAnimation(
+                    AnimationUtils.loadAnimation(
+                        binding.ivFilter.context,
+                        R.anim.horizontal_recycler
+                    )
                 )
-            )
-            binding.tvNameFilter.text = filterItem.filter.name
-            //TODO: while you use code in builder pattern, you should add newline before every build step
-            /*Glide.with(binding.root)
-                .load(filterItem.filter.processFilter(filterItem.image))
-                .into(binding.ivFilter)*/
-
-
-            Glide.with(binding.root).load(filterItem.filter.processFilter(filterItem.image))
-                .into(binding.ivFilter)
-            binding.ivFilter.setOnClickListener {
-                Log.d("BITMAP", filterItem.filter.name)
-                onAction(ActionFilterAdapter.OnFilterClicked(filterItem.filter))
+                tvNameFilter.text = filterItem.filter.name
+                Glide.with(binding.root)
+                    .load(filterItem.filter.processFilter(filterItem.image))
+                    .into(binding.ivFilter)
+                ivFilter.setOnClickListener {
+                    Log.d("BITMAP", filterItem.filter.name)
+                    onAction(ActionFilterAdapter.OnFilterClicked(filterItem.filter))
+                }
             }
-        }
 
+        }
     }
 
     sealed interface ActionFilterAdapter {

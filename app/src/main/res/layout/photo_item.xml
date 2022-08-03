@@ -14,13 +14,12 @@
         android:layout_width="@dimen/_63sdp"
         android:layout_height="@dimen/_63sdp"
         android:scaleType="centerCrop"
+        android:background="@drawable/image_checked"
         app:shapeAppearanceOverlay="@style/CornerSize10Percent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:src="@mipmap/ic_launcher" />
 
-
-    <!--TODO: selector -->
     <ImageView
         android:id="@+id/ivChecked"
         android:layout_width="@dimen/_12sdp"
@@ -30,7 +29,7 @@
         android:contentDescription="@string/app_name"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@drawable/circle" />
+        android:background="@drawable/image_checked" />
 
     <ImageView
         android:id="@+id/ivCheckedTrue"
@@ -38,7 +37,7 @@
         android:layout_height="@dimen/_12sdp"
         android:layout_marginStart="@dimen/_3sdp"
         android:layout_marginTop="@dimen/_3sdp"
-        android:background="@drawable/circle"
+        android:background="@drawable/image_checked"
         android:src="@drawable/check"
         android:contentDescription="@string/app_name"
         android:visibility="gone"

@@ -9,7 +9,7 @@ class SpanGridLayoutManager(val spanManager: (position: Int) -> Int) :
     }
 
     companion object {
-        fun lazyInit(spanManager: (position : Int) -> Int) = lazy {
+        fun lazyInit(spanManager: (position: Int) -> Int) = lazy {
             SpanGridLayoutManager(spanManager)
         }
     }

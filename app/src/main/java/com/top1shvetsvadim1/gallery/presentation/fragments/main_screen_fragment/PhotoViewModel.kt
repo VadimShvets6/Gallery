@@ -27,11 +27,18 @@ class PhotoViewModel : ViewModel() {
 
     fun getListPhoto(context: Context) {
         viewModelScope.launch(Dispatchers.Default) {
-            //TODO: you can create simple function for not repeat code, like showLoading() and hideLoading()
-            _state.postValue(State.Loading(true))
+            showLoading()
             val result = loadPhotoFromGalleryUseCase(context)
             _listPhoto.postValue(result)
-            _state.postValue(State.Loading(false))
+            hideLoading()
         }
+    }
+
+    private fun showLoading() {
+        _state.postValue(State.Loading(true))
+    }
+
+    private fun hideLoading() {
+        _state.postValue(State.Loading(false))
     }
 }

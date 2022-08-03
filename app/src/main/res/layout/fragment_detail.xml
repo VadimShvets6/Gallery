@@ -7,12 +7,13 @@
     android:background="@color/main_bg"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.fragments.detail_screen_fragment.DetailFragment">
-    <!-- TODO: check design on 16:9 devices -->
+
     <ImageView
         android:id="@+id/buttonBack"
         android:contentDescription="@string/app_name"
-        android:layout_width="@dimen/_25sdp"
-        android:layout_height="@dimen/_25sdp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:padding="8dp"
         android:layout_marginTop="@dimen/_25sdp"
         android:layout_marginStart="@dimen/_12sdp"
         android:src="@drawable/ic_chevron_left"
@@ -28,7 +29,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- TODO: check selector to implement checkable behaviour -->
         <ImageView
             android:id="@+id/buttonShare"
             android:contentDescription="@string/app_name"
@@ -81,7 +81,7 @@
         android:layout_marginEnd="@dimen/_12sdp"
         android:fontFamily="@font/sf_pro_display_semibold"
         android:textColor="@color/white"
-        android:textSize="@dimen/_12sdp"
+        android:textSize="@dimen/_12ssp"
         app:layout_constraintBottom_toBottomOf="@+id/tvLabelName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tvLabelName"
@@ -97,7 +97,7 @@
         android:layout_marginTop="@dimen/_8sdp"
         android:layout_marginStart="@dimen/_21sdp"
         android:fontFamily="@font/sf_pro_display_semibold"
-        android:textSize="@dimen/_14sdp"
+        android:textSize="@dimen/_14ssp"
         app:layout_constraintTop_toBottomOf="@id/tvLabelName"
         app:layout_constraintStart_toStartOf="parent"/>
 
@@ -109,14 +109,13 @@
         android:layout_marginStart="@dimen/_12sdp"
         android:layout_marginEnd="@dimen/_12sdp"
         android:orientation="horizontal"
-        tools:listitem="@layout/item_filteer"
+        tools:listitem="@layout/filter_item"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@id/tvLabelFilters"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <!-- TODO: selector -->
     <ProgressBar
         android:id="@+id/progressBarSave"
         android:layout_width="wrap_content"
@@ -126,22 +125,12 @@
         style="@style/CircularDeterminateProgressBar"
         android:progressDrawable="@drawable/circle_progress_bar"
         android:progress="0"
+        android:background="@drawable/progress_bar_save"
+        tools:visibility="visible"
         android:layout_marginEnd="@dimen/_12sdp"
         app:layout_constraintTop_toBottomOf="@id/ivImage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/rvListFilters"/>
-
-    <ImageView
-        android:id="@+id/ivSaveSuccess"
-        android:layout_width="@dimen/_32sdp"
-        android:layout_height="@dimen/_32sdp"
-        android:src="@drawable/ic_save_success"
-        android:visibility="gone"
-        android:contentDescription="@string/app_name"
-        app:layout_constraintTop_toTopOf="@id/progressBarSave"
-        app:layout_constraintBottom_toBottomOf="@id/progressBarSave"
-        app:layout_constraintStart_toStartOf="@id/progressBarSave"
-        app:layout_constraintEnd_toEndOf="@id/progressBarSave"/>
 
     <ProgressBar
         android:id="@+id/progressBar"

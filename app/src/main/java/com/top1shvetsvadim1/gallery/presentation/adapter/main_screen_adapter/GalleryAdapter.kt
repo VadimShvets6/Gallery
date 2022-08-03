@@ -107,9 +107,8 @@ class GalleryAdapter(val onAction: (Action) -> Unit) :
             else -> throw RuntimeException("Unknown view")
         }
 
-    //TODO: ctrl + alt + L
-    fun resetChoice(){
-        if(singleItem == -1){
+    fun resetChoice() {
+        if (singleItem == -1) {
             return
         }
         val newItem = getItem(singleItem) as PhotoItem

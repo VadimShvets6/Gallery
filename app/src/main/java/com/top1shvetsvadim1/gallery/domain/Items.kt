@@ -5,10 +5,9 @@ import android.os.Parcelable
 import com.top1shvetsvadim1.gallery.presentation.utils.ItemUIModel
 import kotlinx.parcelize.Parcelize
 
-data class HeaderItem(val title: String, val size: Int) : ItemUIModel {
+data class HeaderItem(val tag: String, val title: String, val size: Int) : ItemUIModel {
     override fun areItemsTheSame(other: ItemUIModel): Boolean {
-        //TODO: change to tag
-        return other is HeaderItem && other.title == title
+        return other is HeaderItem && other.title == tag
     }
 
     override fun areContentsTheSame(other: ItemUIModel): Boolean {
